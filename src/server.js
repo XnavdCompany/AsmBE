@@ -1,19 +1,22 @@
-const express = require('express')
+import express from 'express'
+import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
+import userRouter from './router/users'
+
+const port = 8000
 const app = express()
-const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Home Page!')
-})
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('/product', (req, res) => {
-  res.send('Product Page!')
-})
+// // parse application/json
+app.use(bodyParser.json())
 
-app.get('/product/:id', (req, res) => {
-  res.send('Product Detail Page!')
-})
+mongoose.connect('mongodb://127.0.0.1:27017/assm')
+    .then(() => console.log('DB connected'))
+
+app.use('/users',userRouter)
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log('Server running');
 })

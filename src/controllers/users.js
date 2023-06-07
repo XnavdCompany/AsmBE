@@ -12,7 +12,8 @@ const userSchema = Joi.object({
         "string.min": "Mật khẩu không hợp lệ",
         "string.empty": "Trường dữ liệu bắt buộc"
     }),
-    confirmPassword: Joi.ref('password')
+    confirmPassword: Joi.ref('password'),
+    role : Joi.number().default(1)
 })
 
 export const signup = async (req, res) => {

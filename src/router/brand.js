@@ -1,5 +1,5 @@
 import express from 'express'
-import { createBrand, getBrand, getBrandById } from '../controller/brand'
+import { createBrand, getBrand, getBrandById } from '../controllers/brand.js'
 
 const brandRouter = express.Router()
 

@@ -8,7 +8,7 @@ import cors from 'cors'
 
 
 
-const port = 8000
+const port = 8080
 const app = express()
 
 app.use(cors())
@@ -21,7 +21,7 @@ app.use(bodyParser.json())
 mongoose.connect('mongodb://127.0.0.1:27017/assm')
     .then(() => console.log('DB connected'))
 
-app.use('/users',userRouter),
+app.use('/api',userRouter),
 app.use('/api',brandRouter),
 app.use('/api',productRouter)
 

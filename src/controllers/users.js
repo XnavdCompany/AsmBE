@@ -55,39 +55,39 @@ const userSignin = Joi.object({
 
 export const signin = async (req, res) => {
   try {
-    const body = req.body;
-    const { error } = userSignin.validate(body);
-    // validate
+    const { email, password } = req.body;
+    const { error } = signinSchema.validate(req.body, { abortEarly: false });
+
     if (error) {
-      return res.status(400).send({
-        message: error.details[0].message,
+      const errors = error.details.map((err) => err.message);
+      return res.status(400).json({
+        message: errors,
       });
     }
-    const user = await User.findOne({ email: body.email });
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).send({
-        message: "Tên đăng nhập hoặc mật khẩu sai !",
+      return res.status(400).json({
+        message: "Tài khoản không tồn tại",
       });
     }
-    const isValidate = bcrypt.compareSync(body.password, user.password);
-    if (!isValidate) {
-      return res.status(400).send({
-        message: "Tên đăng nhập hoặc mật khẩu sai !",
+    // nó vừa mã hóa và vừa so sánh
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Sai mật khẩu",
       });
     }
-    const accessToken = jwt.sign({ _id: user._id }, "assm", {
-      expiresIn: "5m",
+
+    user.password = undefined;
+    // tạo token từ server
+    const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {
+      expiresIn: 60 * 60,
     });
-    res.send({
-      message: "Đăng nhập thành công !",
-      data: {
-        user,
-        accessToken,
-      },
+
+    return res.status(201).json({
+      message: "Đăng nhập thành công",
+      accessToken: token,
+      user,
     });
-  } catch (err) {
-    res.status(500).send({
-      message: err,
-    });
-  }
+  } catch (error) {}
 };

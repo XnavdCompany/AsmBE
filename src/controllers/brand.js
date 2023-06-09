@@ -42,3 +42,39 @@ export const createBrand = async (req, res) => {
         })
     }
 }
+
+export const updateBrand = async (req, res) => {
+    try {
+      const data = await Brand.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
+      if (!data) {
+        return res.status(404).json({
+          message: "Không tìm thấy thương hiệu",
+        });
+      }
+      return res.status(200).json({
+        message: "Sửa thương hiệu thành công",
+        data,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: error,
+      });
+    }
+  };
+
+
+  export const removeBrand = async (req, res) => {
+    try {
+        const data = await Brand.findByIdAndDelete(req.params.id);
+        return res.status(200).json({
+            message: "Xóa thương hiệu thành công",
+            data,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: error,
+        });
+    }
+};

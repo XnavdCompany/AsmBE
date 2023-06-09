@@ -4,10 +4,14 @@ import mongoose from 'mongoose'
 import userRouter from './router/users.js'
 import brandRouter from './router/brand.js'
 import productRouter from './router/product.js'
+import cors from 'cors'
+
+
 
 const port = 8000
 const app = express()
 
+app.use(cors())
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 

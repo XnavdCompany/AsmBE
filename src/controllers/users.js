@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 const salt = bcrypt.genSaltSync(10);
 
 const userSchema = Joi.object({
-    username: Joi.string().required(),
+    // username: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required().messages({
         "string.min": "Mật khẩu không hợp lệ",

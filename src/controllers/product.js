@@ -4,7 +4,7 @@ export const getProduct = async (req, res) => {
     try {
         const data = await Product.find()
         return res.send({
-            message: "success",
+            message: "Tìm sản phẩm thành công",
             data,
         })
     } catch (err) {
@@ -19,7 +19,7 @@ export const getProductById = async (req, res) => {
     const data = await Product.findById(id)
     if (data) {
         res.send({
-            message: "Success",
+            message: "Tìm sản phẩm thành công",
             data,
         })
     } else {

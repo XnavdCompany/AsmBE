@@ -18,10 +18,9 @@ const User = new Schema({
     require: true,
   },
   role: {
-    type: Number,
-    default: 1,
+    type: String,
+    default: "member",
   },
 });
-
 
 export default mongoose.model("user", User);

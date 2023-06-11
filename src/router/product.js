@@ -7,7 +7,7 @@ productRouter.get('/product', getProduct)
 productRouter.get('/product/:id', getProductById)
 productRouter.post('/product', createProduct)
 productRouter.delete('/product/:id', removeProduct)
-productRouter.patch('/product/:id', updateProduct)
+productRouter.put('/product/:id', updateProduct)
 
 
 

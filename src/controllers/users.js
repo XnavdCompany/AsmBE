@@ -91,3 +91,67 @@ export const signin = async (req, res) => {
     });
   } catch (error) {}
 };
+
+
+export const getUser = async (req, res) => {
+  try {
+      const data = await User.find()
+      return res.send({
+          message: "Tìm người dùng thành công",
+          data,
+      })
+  } catch (err) {
+      return res.send({
+          message: err
+      })
+  }
+}
+
+export const getUserById = async (req, res) => {
+  const id = req.params.id
+  const data = await User.findById(id)
+  if (data) {
+      res.send({
+          message: "Tìm người dùng thành công",
+          data,
+      })
+  } else {
+      res.status(404).send("Không tìm thấy người dùng")
+  }
+  res.end()
+}
+
+export const removeUser = async (req, res) => {
+  try {
+      const data = await User.findByIdAndDelete(req.params.id);
+      return res.status(200).json({
+          message: "Người dùng đã được xóa thành công",
+          data,
+      });
+  } catch (error) {
+      return res.status(500).json({
+          message: error,
+      });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  try {
+    const data = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!data) {
+      return res.status(404).json({
+        message: "Không tìm thấy người dùng",
+      });
+    }
+    return res.status(200).json({
+      message: "Người dùng đã được cập nhật thành công",
+      data,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error,
+    });
+  }
+};

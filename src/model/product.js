@@ -11,7 +11,7 @@ const Product = new Schema({
         type:Number,
         require:true
     },
-    image: {
+    img: {
         type:String,
         require:true
     },
